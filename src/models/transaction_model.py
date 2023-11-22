@@ -19,3 +19,6 @@ class TransactionModel(Base):
     created_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), init=False
     )
+
+
+"select a.id"

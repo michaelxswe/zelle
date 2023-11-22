@@ -1,8 +1,10 @@
 from datetime import datetime
 from decimal import Decimal
 
-from fastapi import HTTPException, status
+from fastapi import status
 from pydantic import BaseModel, ConfigDict, model_validator
+
+from middlewares.handle_error import ApplicationException
 
 
 class Transaction(BaseModel):
@@ -10,22 +12,15 @@ class Transaction(BaseModel):
 
 
 class TransactionCreate(Transaction):
-    user_id: int
-    receiver_id: int | None = None
+    phone: str
     amount: Decimal
     message: str | None = None
 
     @model_validator(mode="after")
     def populate_fields(self) -> "TransactionCreate":
         if self.amount <= 0:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid amount"
-            )
-
-        if self.receiver_id and self.user_id == self.receiver_id:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="You cannot send money to yourself",
+            raise ApplicationException(
+                status_code=status.HTTP_400_BAD_REQUEST, error="Invalid amount."
             )
 
         return self
@@ -33,8 +28,7 @@ class TransactionCreate(Transaction):
 
 class TransactionRead(Transaction):
     id: int
-    user_id: int
-    receiver_id: int | None = None
+    phone: str | None
     amount: Decimal
     message: str | None = None
     created_date: datetime
