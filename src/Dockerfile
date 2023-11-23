@@ -8,6 +8,6 @@ RUN pip install poetry
 
 RUN poetry config virtualenvs.create false
 
-WORKDIR /app/src
+RUN poetry install --no-dev --no-root
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]

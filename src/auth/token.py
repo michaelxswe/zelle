@@ -8,8 +8,6 @@ from jose import JWTError, jwt
 from middlewares.handle_error import ApplicationException
 from utils.settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 
-settings = dotenv_values(".env")
-
 http_bearer = HTTPBearer()
 
 

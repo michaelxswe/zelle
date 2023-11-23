@@ -1,4 +1,3 @@
-import uvicorn
 from fastapi import FastAPI
 
 from middlewares.handle_error import HandleError
@@ -15,11 +14,3 @@ app.add_middleware(TrackHistory)
 app.include_router(user_router)
 app.include_router(database_router)
 app.include_router(transaction_router)
-
-
-def start():
-    uvicorn.run(app="main:app", port=80)
-
-
-if __name__ == "__main__":
-    start()
