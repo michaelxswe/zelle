@@ -14,11 +14,8 @@ class TransactionModel(Base):
     receiver_id: Mapped[int | None] = mapped_column(
         ForeignKey("user.id"), nullable=True
     )
-    amount: Mapped[Decimal] = mapped_column(Numeric(precision=10, scale=2))
+    amount: Mapped[Decimal] = mapped_column(Numeric(precision=10, scale=2), index=True)
     message: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), init=False
     )
-
-
-"select a.id"

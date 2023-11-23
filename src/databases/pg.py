@@ -1,12 +1,11 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass
+from utils.settings import DATABASE_URL
 
 
 class Base(DeclarativeBase, MappedAsDataclass):
     pass
 
-
-from utils.settings import DATABASE_URL
 
 engine = create_async_engine(url=DATABASE_URL, echo=True)
 Session = async_sessionmaker(engine)

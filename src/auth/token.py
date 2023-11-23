@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 
-from dotenv import dotenv_values
 from fastapi import Depends, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt

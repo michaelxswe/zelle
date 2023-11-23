@@ -21,3 +21,8 @@ class UserRead(User):
     phone: str
     balance: Decimal
     created_date: datetime
+
+class LoginCredential(User):
+    username: str
+    password: str
+
