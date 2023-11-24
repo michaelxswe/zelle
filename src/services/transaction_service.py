@@ -127,7 +127,6 @@ class TransactionService:
         transactions_res = await session.execute(query)
         transactions = transactions_res.scalars()
         for transaction in transactions:
-            print(transaction.receiver_id)
             query = select(UserModel).where(UserModel.id == transaction.receiver_id)
             user_res = await session.execute(query)
             user = user_res.scalar()
