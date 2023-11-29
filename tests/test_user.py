@@ -1,24 +1,29 @@
+import pytest
 from fastapi import status
-from fastapi.testclient import TestClient
+from httpx import AsyncClient
 
 from main import app
 
-client = TestClient(app)
+base_url = "http://test"
 
 
-def test_invalid_username():
-    response = client.post(
-        "/api/users",
-        json={"username": "mike", "password": "mike", "phone": "9175205546"},
-    )
+@pytest.mark.asyncio
+async def test_invalid_username():
+    async with AsyncClient(app=app, base_url=base_url) as client:
+        response = await client.post(
+            "/api/users",
+            json={"username": "mike", "password": "mike", "phone": "9175205546"},
+        )
 
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-def test_invalid_token():
-    response = client.get(
-        "/api/users",
-        headers={"Authorization": "Bearer 123"},
-    )
+@pytest.mark.asyncio
+async def test_invalid_token():
+    async with AsyncClient(app=app, base_url=base_url) as client:
+        response = await client.get(
+            "/api/users",
+            headers={"Authorization": "Bearer 123"},
+        )
 
-    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
