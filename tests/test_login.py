@@ -1,11 +1,8 @@
 import pytest
 from fastapi import status
-from fastapi.testclient import TestClient
 from httpx import AsyncClient
 
 from main import app
-
-client = TestClient(app)
 
 base_url = "http://test"
 
