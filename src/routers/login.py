@@ -17,7 +17,9 @@ async def login(
     service: LoginService = Depends(get_login_service),
 ):
     user_id = await service.verify_credentials(
-        username=login_credential.username, password=login_credential.password, session=session
+        username=login_credential.username,
+        password=login_credential.password,
+        session=session,
     )
     token = create_token(user_id=user_id)
     return JSONResponse(

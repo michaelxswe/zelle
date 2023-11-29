@@ -42,11 +42,11 @@ class HandleError(BaseHTTPMiddleware):
                 content={"errors": exc.errors()},
                 headers=headers,
             )
-        # except Exception as exc:
-        #     headers = handle_error(str(exc))
+        except Exception as exc:
+            headers = handle_error(str(exc))
 
-        #     return JSONResponse(
-        #         status_code=500,
-        #         content={"error": "Internal Server Error."},
-        #         headers=headers,
-        #     )
+            return JSONResponse(
+                status_code=500,
+                content={"error": "Internal Server Error."},
+                headers=headers,
+            )
