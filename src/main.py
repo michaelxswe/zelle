@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-
 from middlewares.handle_error import HandleError
 from middlewares.track_history import TrackHistory
 from routers import admin, login, transaction, user
 
 app = FastAPI()
-
 
 app.add_middleware(HandleError)
 app.add_middleware(TrackHistory)

@@ -4,17 +4,17 @@ from httpx import AsyncClient
 
 from main import app
 
-base_url = "http://test"
+base_url = 'http://test'
 
 
 @pytest.mark.asyncio
 async def test_invalid_credentials():
     async with AsyncClient(app=app, base_url=base_url) as client:
         response = await client.post(
-            "/api/login",
+            '/api/login',
             json={
-                "username": "test",
-                "password": "test",
+                'username': 'test',
+                'password': 'test',
             },
         )
 

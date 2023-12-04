@@ -1,7 +1,5 @@
-import uuid
-
 from starlette.middleware.base import BaseHTTPMiddleware
-
+import uuid
 
 class TrackHistory(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):

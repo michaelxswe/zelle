@@ -1,18 +1,14 @@
 from datetime import datetime
 from decimal import Decimal
-
 from pydantic import BaseModel, ConfigDict
 
-
 class User(BaseModel):
-    model_config = ConfigDict(extra="forbid", from_attributes=True)
-
+    model_config = ConfigDict(extra = 'forbid', from_attributes = True)
 
 class UserCreate(User):
     username: str
     password: str
     phone: str
-
 
 class UserRead(User):
     id: int
@@ -25,4 +21,3 @@ class UserRead(User):
 class LoginCredential(User):
     username: str
     password: str
-
