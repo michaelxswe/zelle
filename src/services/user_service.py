@@ -1,7 +1,7 @@
 from databases.postgresql.models import UserModel
+from exceptions import CustomException
 from fastapi import status
 from functools import lru_cache
-from middlewares.handle_error import ApplicationException
 from schemas.user import UserCreate
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,7 +18,7 @@ class UserService:
         user = user_res.scalar()
 
         if user:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Username already exist.'
             )
@@ -28,7 +28,7 @@ class UserService:
         user = user_res.scalar()
 
         if user:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Phone number already exist.'
             )
@@ -46,19 +46,7 @@ class UserService:
         user = user_res.scalar()
 
         if not user:
-            raise ApplicationException(
-                status_code = status.HTTP_404_NOT_FOUND,
-                error = 'User not found.'
-            )
-        return user
-
-    async def get_info(self, user_id: int, session: AsyncSession):
-        query = select(UserModel).where(UserModel.id == user_id)
-        user_res = await session.execute(query)
-        user = user_res.scalar()
-
-        if not user:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_404_NOT_FOUND,
                 error = 'User not found.'
             )

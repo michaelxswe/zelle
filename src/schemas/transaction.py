@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
+from exceptions import CustomException
 from fastapi import status
-from middlewares.handle_error import ApplicationException
 from pydantic import BaseModel, ConfigDict, model_validator
 
 class Transaction(BaseModel):
@@ -15,7 +15,7 @@ class TransactionCreate(Transaction):
     @model_validator(mode = 'after')
     def populate_fields(self) -> 'TransactionCreate':
         if self.amount <= 0:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Invalid amount.'
             )

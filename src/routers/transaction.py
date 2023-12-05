@@ -1,4 +1,4 @@
-from auth.token import validate_token
+from auth.jwt import validate_token
 from databases.postgresql.client import get_session
 from decimal import Decimal
 from fastapi import APIRouter, Depends
@@ -7,9 +7,9 @@ from services.transaction_service import TransactionService, get_transaction_ser
 from services.user_service import UserService, get_user_service
 from sqlalchemy.ext.asyncio import AsyncSession
 
-router = APIRouter(prefix = '/api/transactions', tags = ['Transaction'])
+transaction = APIRouter(prefix = '/api/transactions', tags = ['Transaction'])
 
-@router.post('/deposit')
+@transaction.post('/deposit')
 async def deposit(
     amount: Decimal,
     user_id: int = Depends(validate_token),
@@ -25,7 +25,7 @@ async def deposit(
         session = session
     )
 
-@router.post('/withdraw')
+@transaction.post('/withdraw')
 async def withdraw(
     amount: Decimal,
     user_id: int = Depends(validate_token),
@@ -41,7 +41,7 @@ async def withdraw(
         session = session
     )
 
-@router.post('/transfer')
+@transaction.post('/transfer')
 async def transfer(
     data: TransactionCreate,
     user_id: int = Depends(validate_token),
@@ -57,14 +57,14 @@ async def transfer(
         session = session
     )
 
-@router.get('/history', response_model=list[TransactionRead])
-async def history(
+@transaction.get('/history', response_model=list[TransactionRead])
+async def show_history(
     user_id: int = Depends(validate_token),
     transaction_service: TransactionService = Depends(get_transaction_service),
     session: AsyncSession = Depends(get_session)
 ):
 
-    return await transaction_service.history(
+    return await transaction_service.show_history(
         user_id = user_id,
         session = session
     )

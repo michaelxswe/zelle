@@ -1,9 +1,9 @@
 from databases.postgresql.models import UserModel, TransactionModel
 from decimal import Decimal
+from exceptions import CustomException
 from fastapi import status
 from fastapi.responses import JSONResponse
 from functools import lru_cache
-from middlewares.handle_error import ApplicationException
 from schemas.transaction import TransactionCreate, TransactionRead
 from services.user_service import UserService
 from sqlalchemy import select
@@ -19,7 +19,7 @@ class TransactionService:
     ):
         
         if amount <= 0:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Invalid amount.'
             )
@@ -51,13 +51,13 @@ class TransactionService:
     ):
         
         if amount <= 0:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Invalid amount.')
         
         user = await user_service.get_user(id = user_id, session = session)
         if user.balance < amount:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Insufficient balance.'
             )
@@ -90,7 +90,7 @@ class TransactionService:
         receiver = receiver_res.scalar()
 
         if not receiver:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_404_NOT_FOUND,
                 error = 'Invalid phone number'
             )
@@ -98,7 +98,7 @@ class TransactionService:
         user = await user_service.get_user(id = user_id, session = session)
 
         if user.balance < data.amount:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_400_BAD_REQUEST,
                 error = 'Insufficient balance.'
             )
@@ -122,7 +122,7 @@ class TransactionService:
             content = {'detail': f'Successfully transfered ${data.amount} to {data.phone}. Your current balance is ${user.balance}.Your transaction id is {transaction.id}.'}
         )
 
-    async def history(self, user_id: int, session: AsyncSession):
+    async def show_history(self, user_id: int, session: AsyncSession):
         res = []
 
         query = select(TransactionModel).where(TransactionModel.user_id == user_id)

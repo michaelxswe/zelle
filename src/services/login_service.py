@@ -1,7 +1,7 @@
 from databases.postgresql.models import UserModel
+from exceptions import CustomException
 from fastapi import status
 from functools import lru_cache
-from middlewares.handle_error import ApplicationException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,7 +12,7 @@ class LoginService:
         user_res = await session.execute(query)
         user = user_res.scalar()
         if not user or user.password != password:
-            raise ApplicationException(
+            raise CustomException(
                 status_code = status.HTTP_401_UNAUTHORIZED,
                 error = "Invalid username or password."
             )

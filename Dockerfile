@@ -2,7 +2,9 @@ FROM python:3.11.1
 
 WORKDIR /app
 
-COPY . /app
+COPY /src /app
+
+COPY pyproject.toml poetry.lock /app/
 
 RUN pip install poetry
 

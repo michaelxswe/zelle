@@ -22,8 +22,8 @@ class UserModel(Base):
     __tablename__ = 'user'
     
     id: Mapped[int] = mapped_column(INTEGER, primary_key=True, init=False)
-    username: Mapped[str] = mapped_column(VARCHAR(length=50), unique=True)
-    password: Mapped[str] = mapped_column(VARCHAR(length=50))
-    phone: Mapped[str] = mapped_column(VARCHAR(length=50), unique=True)
+    username: Mapped[str] = mapped_column(VARCHAR(length=25), unique=True)
+    password: Mapped[str] = mapped_column(VARCHAR(length=25))
+    phone: Mapped[str] = mapped_column(VARCHAR(length=25), unique=True)
     balance: Mapped[Decimal] = mapped_column(NUMERIC(precision=10, scale=2),server_default='0.00',init=False)
     created_date: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), server_default=text('''date_trunc('s', now())'''), init=False)
