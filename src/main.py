@@ -16,7 +16,7 @@ async def lifespan(app: FastAPI):
     print("shutting down...")
 
 
-app = FastAPI(lifespan=lifespan) # type: ignore
+app = FastAPI(lifespan=lifespan)  # type: ignore
 
 app.add_exception_handler(AppException, app_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)

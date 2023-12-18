@@ -1,11 +1,11 @@
 from auth.jwt import create_token
+from config import Settings, get_settings
 from databases.postgresql.client import get_session
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from schemas.user import LoginCredential
 from services.login_service import LoginService, get_login_service
 from sqlalchemy.ext.asyncio import AsyncSession
-from config import Settings, get_settings
 
 router = APIRouter(prefix="/api/login", tags=["Login"])
 

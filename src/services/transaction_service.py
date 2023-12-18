@@ -7,8 +7,8 @@ from functools import lru_cache
 from schemas.transaction import TransactionCreate, TransactionRead
 from services.user_service import UserService
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class TransactionService:
