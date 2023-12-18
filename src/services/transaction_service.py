@@ -130,14 +130,14 @@ class TransactionService:
         )
 
     async def show_history(self, user_id: int, session: AsyncSession):
-        # phone numbers of anyone this user_id has transaction with
         query = select(UserModel).where(UserModel.id == user_id)
         user_res = await session.execute(query)
         user = user_res.scalar()
 
         if not user:
             raise AppException(status_code=status.HTTP_404_NOT_FOUND, message="User not found.")
-        
+
+        # phone numbers of anyone this user_id has had transaction with
         query = text(
             """
             SELECT * FROM (
@@ -158,7 +158,6 @@ class TransactionService:
             ORDER BY combined.id DESC;
         
             """
-
         )
 
         result = await session.execute(query, {"user_id": user_id})
