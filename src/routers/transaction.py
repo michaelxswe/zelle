@@ -7,64 +7,51 @@ from services.transaction_service import TransactionService, get_transaction_ser
 from services.user_service import UserService, get_user_service
 from sqlalchemy.ext.asyncio import AsyncSession
 
-transaction = APIRouter(prefix = '/api/transactions', tags = ['Transaction'])
+router = APIRouter(prefix="/api/transactions", tags=["Transaction"])
 
-@transaction.post('/deposit')
+
+@router.post("/deposit")
 async def deposit(
     amount: Decimal,
     user_id: int = Depends(validate_token),
     transaction_service: TransactionService = Depends(get_transaction_service),
     user_service: UserService = Depends(get_user_service),
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
-
     return await transaction_service.deposit(
-        amount = amount,
-        user_id = user_id,
-        user_service = user_service,
-        session = session
+        amount=amount, user_id=user_id, user_service=user_service, session=session
     )
 
-@transaction.post('/withdraw')
+
+@router.post("/withdraw")
 async def withdraw(
     amount: Decimal,
     user_id: int = Depends(validate_token),
     transaction_service: TransactionService = Depends(get_transaction_service),
     user_service: UserService = Depends(get_user_service),
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
-
     return await transaction_service.withdraw(
-        amount = amount,
-        user_id = user_id,
-        user_service = user_service,
-        session = session
+        amount=amount, user_id=user_id, user_service=user_service, session=session
     )
 
-@transaction.post('/transfer')
+
+@router.post("/transfer")
 async def transfer(
     data: TransactionCreate,
     user_id: int = Depends(validate_token),
     transaction_service: TransactionService = Depends(get_transaction_service),
     user_service: UserService = Depends(get_user_service),
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
-
     return await transaction_service.transfer(
-        data = data,
-        user_id = user_id,
-        user_service = user_service,
-        session = session
+        data=data, user_id=user_id, user_service=user_service, session=session
     )
 
-@transaction.get('/history', response_model=list[TransactionRead])
+@router.get("/history", response_model=list[TransactionRead])
 async def show_history(
     user_id: int = Depends(validate_token),
     transaction_service: TransactionService = Depends(get_transaction_service),
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
-
-    return await transaction_service.show_history(
-        user_id = user_id,
-        session = session
-    )
+    return await transaction_service.show_history(user_id=user_id, session=session)

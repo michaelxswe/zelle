@@ -1,29 +1,29 @@
+from config import get_settings, Settings
 from datetime import datetime, timedelta
-from exceptions import CustomException
+from exceptions.excs import AppException
 from fastapi import Depends, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 
 http_bearer = HTTPBearer()
 
-SECRET_KEY = '09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7'
-ALGORITHM = 'HS256'
 
-def create_token(user_id: int):
-    expires = datetime.utcnow() + timedelta(minutes = 30)
+def create_token(user_id: int, settings: Settings):
+    expires = datetime.utcnow() + timedelta(minutes=30)
     encode = {"user_id": user_id, "exp": expires}
-    token = jwt.encode(encode, SECRET_KEY, algorithm = ALGORITHM)
+    token = jwt.encode(encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return token
 
-def validate_token(credentials: HTTPAuthorizationCredentials = Depends(http_bearer)):
+
+def validate_token(
+    credentials: HTTPAuthorizationCredentials = Depends(http_bearer),
+    settings: Settings = Depends(get_settings),
+):
     try:
         token = credentials.credentials
-        decoded_token = jwt.decode(token, SECRET_KEY, algorithms = [ALGORITHM])
+        decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         user_id = decoded_token.get("user_id")
         return user_id
 
     except JWTError:
-        raise CustomException(
-            status_code = status.HTTP_401_UNAUTHORIZED,
-            error = "Invalid token."
-        )
+        raise AppException(status_code=status.HTTP_401_UNAUTHORIZED, message="Invalid token.")

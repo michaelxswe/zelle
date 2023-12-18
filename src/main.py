@@ -1,27 +1,30 @@
-from exceptions import unhandled_exception, validation_exception, custom_exception, RequestValidationError, CustomException
+from exceptions.excs import AppException
+from exceptions.handlers import (
+    app_exception_handler,
+    validation_exception_handler,
+    unhandled_exception_handler,
+)
 from fastapi import FastAPI
-from middlewares import RequestTrace
-from routers.admin import admin
-from routers.login import login
-from routers.transaction import transaction
-from routers.user import user
+from fastapi.exceptions import RequestValidationError
+from middlewares import trace
+from routers import admin, login, user, transaction
 
-app = FastAPI()
 
-middlewares = [RequestTrace]
-exceptions = [
-    (Exception, unhandled_exception),
-    (RequestValidationError, validation_exception),
-    (CustomException, custom_exception)
-]
+async def lifespan(app: FastAPI):
+    print("starting up...")
+    yield
+    print("shutting down...")
 
-routers = [admin, login, transaction, user]
 
-for middleware in middlewares:
-    app.add_middleware(middleware)
+app = FastAPI(lifespan=lifespan)
 
-for exception_type, exception_handler in exceptions:
-    app.add_exception_handler(exception_type, exception_handler)
+app.add_exception_handler(AppException, app_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(Exception, unhandled_exception_handler)
 
-for router in routers:
-    app.include_router(router)
+app.add_middleware(trace.Trace)
+
+app.include_router(admin.router)
+app.include_router(login.router)
+app.include_router(transaction.router)
+app.include_router(user.router)
