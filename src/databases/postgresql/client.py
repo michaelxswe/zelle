@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 @lru_cache
 def get_engine(settings: Settings = Depends(get_settings)):
-    engine = create_async_engine(settings.DATABASE_URL, echo=True)
+    engine = create_async_engine(url=settings.DATABASE_URL, echo=True)
     return engine
 
 

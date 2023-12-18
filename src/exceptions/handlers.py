@@ -18,7 +18,7 @@ async def app_exception_handler(request: Request, e: AppException):
 
 
 async def validation_exception_handler(request: Request, e: RequestValidationError):
-    headers = handle_exception(e.errors())
+    headers = handle_exception(e.errors()) # type: ignore
     return JSONResponse(status_code=422, content={"message": e.errors()}, headers=headers)
 
 
