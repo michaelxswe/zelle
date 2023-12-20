@@ -1,0 +1,9 @@
+# Ignore Python compiled files
+__pycache__/
+
+# Ignore specific folder names
+revisions/
+
+# Ignore specific file names
+alembic
+alembic.ini

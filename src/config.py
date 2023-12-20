@@ -11,5 +11,5 @@ class Settings(BaseSettings):
 
 
 @lru_cache
-def get_settings():
-    return Settings() # type: ignore
+def settings():
+    return Settings()  # type: ignore

@@ -3,31 +3,31 @@ from decimal import Decimal
 from pydantic import BaseModel, ConfigDict
 
 
-class User(BaseModel):
+class Account(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
-class UserCreate(User):
+class AccountCreate(Account):
     username: str
     password: str
     phone: str
 
 
-class UserUpdate(User):
+class AccountUpdate(Account):
     username: str | None = None
     password: str | None = None
     phone: str | None = None
 
 
-class UserRead(User):
+class AccountRead(Account):
     id: int
     username: str
     password: str
     phone: str
     balance: Decimal
-    created_date: datetime
+    created_at: datetime
 
 
-class LoginCredential(User):
+class AccountCredentials(Account):
     username: str
     password: str
