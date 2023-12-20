@@ -2,4 +2,4 @@
 
 A RESTful API for a Zelle clone
 
-<http://18.117.107.32/docs>
+<http://3.16.169.214/docs>
