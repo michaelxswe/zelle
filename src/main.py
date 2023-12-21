@@ -21,7 +21,7 @@ from sqlalchemy.exc import SQLAlchemyError
 async def lifespan(app: FastAPI):
     print("starting up...")
     yield
-    await engine(settings=settings()).dispose()
+    await engine(settings=settings()).dispose() # type: ignore
     print("shutting down...")
 
 
