@@ -1,9 +1,9 @@
-import pytest
+from database.model import Base
 from httpx import AsyncClient
 from main import app, lifespan
 from pytest import fixture
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from database.model import Base
+import pytest
 
 
 @pytest.fixture(scope="session")
