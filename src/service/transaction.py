@@ -1,13 +1,13 @@
-from database.postgresql.model import AccountModel, TransactionModel
+from database.model import AccountModel, TransactionModel
 from decimal import Decimal
 from exception import HTTPException
-from functools import lru_cache
 from schema.transaction import TransactionCreate, TransactionHistory
 from service.account import AccountService
 from sqlalchemy import select
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Any
+from fastapi import Request
 
 
 class TransactionService:
@@ -146,6 +146,5 @@ class TransactionService:
         return transaction_history
 
 
-@lru_cache
-def transaction_service():
-    return TransactionService()
+async def get_transaction_service(request: Request):
+    return request.app.state.transaction_service

@@ -1,6 +1,6 @@
-from database.postgresql.model import AccountModel
+from database.model import AccountModel
 from exception import HTTPException
-from functools import lru_cache
+from fastapi import Request
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,6 +16,5 @@ class AuthService:
         return account.id
 
 
-@lru_cache
-def auth_service():
-    return AuthService()
+async def get_auth_service(request: Request):
+    return request.app.state.auth_service

@@ -1,6 +1,6 @@
-from database.postgresql.model import AccountModel
+from database.model import AccountModel
 from exception import HTTPException
-from functools import lru_cache
+from fastapi import Request
 from schema.account import AccountCreate, AccountUpdate
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -51,6 +51,5 @@ class AccountService:
         await session.commit()
 
 
-@lru_cache
-def account_service():
-    return AccountService()
+async def get_account_service(request: Request):
+    return request.app.state.account_service

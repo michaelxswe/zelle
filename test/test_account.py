@@ -1,27 +1,18 @@
 from httpx import AsyncClient
-from main import app
 import pytest
 
-base_url = "http://test"
 
+@pytest.mark.anyio
+async def test_create_account(client: AsyncClient):
+    res = await client.post(
+        "/api/account",
+        json={"username": "michael", "password": "1234", "phone": "123456789"},
+    )
 
-@pytest.mark.asyncio
-async def test_invalid_username():
-    async with AsyncClient(app=app, base_url=base_url) as client:
-        response = await client.post(
-            "/api/accounts",
-            json={"username": "mike", "password": "mike", "test": "test"},
-        )
+    del res.json()["created_at"]
 
-        assert response.status_code == 400
+    assert res.status_code == 201
 
-
-@pytest.mark.asyncio
-async def test_invalid_token():
-    async with AsyncClient(app=app, base_url=base_url) as client:
-        response = await client.get(
-            "/api/accounts",
-            headers={"Authorization": "Bearer 123"},
-        )
-
-        assert response.status_code == 401
+    res_json = res.json()
+    del res_json["created_at"]
+    assert res_json == {"id": 1, "username": "michael", "password": "1234", "phone": "123456789", "balance": "0.00"}

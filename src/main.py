@@ -1,6 +1,4 @@
-from config import settings
 from contextlib import asynccontextmanager
-from database.postgresql.manager import engine
 from exception import (
     HTTPException,
     http_exception_handler,
@@ -9,20 +7,30 @@ from exception import (
     jwt_exception_handler,
     sqlalchemy_exception_handler,
 )
+from config import Settings
+from database.manager import DatabaseManager
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from jose import JWTError
 from middleware import request_trace
 from router import database, auth, account, transaction
+from service.account import AccountService
+from service.auth import AuthService
+from service.transaction import TransactionService
 from sqlalchemy.exc import SQLAlchemyError
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("starting up...")
+    print("Starting application")
+    app.state.settings = Settings()  # type: ignore
+    app.state.database_manager = DatabaseManager(app.state.settings)
+    app.state.account_service = AccountService()
+    app.state.auth_service = AuthService()
+    app.state.transaction_service = TransactionService()
     yield
-    await engine(settings=settings()).dispose() # type: ignore
-    print("shutting down...")
+    await app.state.database_manager.shutdown()
+    print("Closing application")
 
 
 app = FastAPI(lifespan=lifespan)

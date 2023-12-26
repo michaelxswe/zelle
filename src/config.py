@@ -1,6 +1,5 @@
-from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
+from fastapi import Request
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(frozen=True)
@@ -10,6 +9,5 @@ class Settings(BaseSettings):
     ALGORITHM: str
 
 
-@lru_cache
-def settings():
-    return Settings()  # type: ignore
+def get_settings(request: Request):
+    return request.app.state.settings
