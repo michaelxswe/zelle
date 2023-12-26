@@ -50,12 +50,15 @@ async def mock_database_manager(mock_settings: Settings):
 
 
 @pytest.fixture(scope="session")
-async def client(mock_database_manager: DatabaseManager):
+async def client(mock_settings: Settings, mock_database_manager: DatabaseManager):
     async with lifespan(app):
+        original_settings = app.state.settings
         original_database_manager = app.state.database_manager
         try:
+            app.state.settings = mock_settings
             app.state.database_manager = mock_database_manager
             async with AsyncClient(app=app, base_url="http://localhost") as client:
                 yield client
         finally:
             app.state.database_manager = original_database_manager
+            app.state.settings = original_settings
