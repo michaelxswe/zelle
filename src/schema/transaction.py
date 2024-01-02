@@ -27,6 +27,7 @@ class FinancialTransaction(Transaction):
     amount: Decimal
     created_at: datetime
 
+
 class FundTransfer(Transaction):
     id: int
     mode: str

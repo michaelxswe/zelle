@@ -1,15 +1,13 @@
 from httpx import AsyncClient
 import pytest
 
-
+# test creating an account
 @pytest.mark.anyio
 async def test_create_account(client: AsyncClient):
     res = await client.post(
         "/api/account",
         json={"username": "michael", "password": "1234", "phone": "123456789"},
     )
-
-    del res.json()["created_at"]
 
     assert res.status_code == 201
 
