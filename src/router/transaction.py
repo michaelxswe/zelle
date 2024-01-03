@@ -34,7 +34,7 @@ async def transfer(
     return await transaction_service.transfer(transaction_data, access_token)
 
 
-@router.post("/history", response_model=list[TransactionHistory], status_code=201)
+@router.get("/history", response_model=list[TransactionHistory], status_code=201)
 async def history(
     access_token: str = Depends(get_access_token),
     transaction_service: TransactionService = Depends(),

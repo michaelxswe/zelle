@@ -6,6 +6,15 @@ A RESTful API for a Zelle clone
 
 <http://3.144.234.197/docs>
 
+## Techstack:
+
+1. FastAPI
+3. PostgreSQL
+4. Async Sqlalchemy
+5. Alembic
+6. Docker
+7. Aws Elastic Container Service
+
 ## How to Test:
 
 1. Create an account.
