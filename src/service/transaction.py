@@ -50,7 +50,7 @@ class TransactionService:
         recipient_account = await self.account_service.get_account_by_id(transaction_data.recipient_account_id)
 
         if account.id == recipient_account.id:
-            raise HTTPException(status_code=400, message="Cant transfer money to yourself")
+            raise HTTPException(status_code=400, message="cant transfer money to yourself")
 
         return await self.transaction_repository.transfer(
             account, recipient_account, transaction_data.amount, transaction_data.message
