@@ -13,7 +13,7 @@ A RESTful API for a Zelle clone
 4. Async Sqlalchemy
 5. Alembic
 6. Docker
-7. Aws Elastic Container Service
+7. AWS Elastic Container Service
 
 ## How to Use:
 
