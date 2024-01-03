@@ -15,7 +15,7 @@ A RESTful API for a Zelle clone
 6. Docker
 7. Aws Elastic Container Service
 
-## How to Test:
+## How to Use:
 
 1. Create an account.
 2. Sign-in and copy the token.
