@@ -1,9 +1,10 @@
+import uuid
+
 from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from jose import JWTError
 from sqlalchemy.exc import SQLAlchemyError
-import uuid
 
 
 class HTTPException(Exception):

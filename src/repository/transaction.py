@@ -1,6 +1,7 @@
+from decimal import Decimal
+
 from database.client import get_database_session
 from database.model import AccountModel, TransactionModel
-from decimal import Decimal
 from fastapi import Depends
 from schema.transaction import TransactionHistory
 from sqlalchemy import text

@@ -4,7 +4,6 @@ from schema.account import AccountCreate, AccountCredentials, AccountRead, Accou
 from schema.token import AccessToken
 from service.account import AccountService
 
-
 router = APIRouter(prefix="/api/account", tags=["Account"])
 
 

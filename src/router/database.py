@@ -1,5 +1,5 @@
 from config import Settings, get_settings
-from database.client import get_database_client, DatabaseClient
+from database.client import DatabaseClient, get_database_client
 from exception import HTTPException
 from fastapi import APIRouter, Depends
 

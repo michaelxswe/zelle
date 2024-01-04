@@ -1,8 +1,9 @@
 from datetime import datetime
 from decimal import Decimal
-from sqlalchemy import ForeignKey, text, CheckConstraint
-from sqlalchemy.dialects.postgresql import INTEGER, NUMERIC, TIMESTAMP, VARCHAR, TEXT
-from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass, Mapped, mapped_column
+
+from sqlalchemy import CheckConstraint, ForeignKey, text
+from sqlalchemy.dialects.postgresql import INTEGER, NUMERIC, TEXT, TIMESTAMP, VARCHAR
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, mapped_column
 
 
 class Base(DeclarativeBase, MappedAsDataclass):

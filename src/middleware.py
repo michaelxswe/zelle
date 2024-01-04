@@ -1,5 +1,6 @@
-from fastapi import Request
 import uuid
+
+from fastapi import Request
 
 
 async def request_trace(request: Request, call_next):

@@ -1,19 +1,20 @@
-from config import Settings
 from contextlib import asynccontextmanager
+
+from config import Settings
 from database.client import DatabaseClient
 from exception import (
     HTTPException,
     http_exception_handler,
-    validation_exception_handler,
-    unhandled_exception_handler,
     jwt_exception_handler,
     sqlalchemy_exception_handler,
+    unhandled_exception_handler,
+    validation_exception_handler,
 )
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from jose import JWTError
 from middleware import request_trace
-from router import database, account, transaction
+from router import account, database, transaction
 from sqlalchemy.exc import SQLAlchemyError
 
 
