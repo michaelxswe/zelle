@@ -1,6 +1,6 @@
 from auth.guard import create_access_token, validate_access_token
 from config import Settings, get_settings
-from exception import HTTPException
+from exception import HttpException
 from fastapi import Depends
 from repository.account import AccountRepository
 from schema.account import AccountCreate, AccountUpdate
@@ -13,21 +13,21 @@ class AccountService:
 
     async def create_account(self, account_data: AccountCreate):
         if await self.account_repository.username_exist(account_data.username):
-            raise HTTPException(status_code=400, message="username already exist")
+            raise HttpException(status_code=400, message="username already exist")
 
         return await self.account_repository.create_account(account_data)
 
     async def get_account_by_id(self, account_id: int):
         account = await self.account_repository.get_account_by_id(account_id)  # type: ignore
         if not account:
-            raise HTTPException(status_code=404, message="account not found")
+            raise HttpException(status_code=404, message="account not found")
 
         return account
 
     async def get_account_by_credentials(self, username: str, password: str):
         account = await self.account_repository.get_account_by_credentials(username, password)  # type: ignore
         if not account:
-            raise HTTPException(status_code=404, message="account not found")
+            raise HttpException(status_code=404, message="account not found")
 
         return account
 
@@ -38,7 +38,7 @@ class AccountService:
         account = await self.account_repository.get_account_by_id(account_id)  # type: ignore
 
         if not account:
-            raise HTTPException(status_code=404, message="account not found")
+            raise HttpException(status_code=404, message="account not found")
 
         return account
 

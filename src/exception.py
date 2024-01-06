@@ -7,7 +7,7 @@ from jose import JWTError
 from sqlalchemy.exc import SQLAlchemyError
 
 
-class HTTPException(Exception):
+class HttpException(Exception):
     def __init__(self, status_code: int, message: str):
         self.status_code = status_code
         self.message = message
@@ -20,7 +20,7 @@ def handle_exception(error: str):
     return headers
 
 
-async def http_exception_handler(request: Request, e: HTTPException):
+async def http_exception_handler(request: Request, e: HttpException):
     return JSONResponse(status_code=e.status_code, content={"message": e.message})
 
 
@@ -33,6 +33,7 @@ async def jwt_exception_handler(request: Request, e: JWTError):
 
 
 async def sqlalchemy_exception_handler(request: Request, e: SQLAlchemyError):
+    print(e._message)
     return JSONResponse(status_code=500, content={"message": "database error"})
 
 

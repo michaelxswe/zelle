@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from config import Settings
 from database.client import DatabaseClient
 from exception import (
-    HTTPException,
+    HttpException,
     http_exception_handler,
     jwt_exception_handler,
     sqlalchemy_exception_handler,
@@ -25,13 +25,14 @@ async def lifespan(app: FastAPI):
     await app.state.database_client.shutdown_database()
     print("Closing application")
 
-#factory set up to avoid mocking/patching during tests
+
+# factory set up to avoid mocking/patching during tests
 def create_app(settings: Settings = Settings()):  # type: ignore
     app = FastAPI(lifespan=lifespan)
     app.state.settings = settings
     app.state.database_client = DatabaseClient(app.state.settings.DATABASE_URL)
 
-    app.add_exception_handler(HTTPException, http_exception_handler)
+    app.add_exception_handler(HttpException, http_exception_handler)
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
     app.add_exception_handler(Exception, unhandled_exception_handler)
     app.add_exception_handler(JWTError, jwt_exception_handler)

@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from exception import HTTPException
+from exception import HttpException
 from pydantic import BaseModel, ConfigDict, model_validator
 
 
@@ -17,7 +17,7 @@ class TransactionCreate(Transaction):
     @model_validator(mode="after")
     def populate_fields(self):
         if self.amount <= 0:
-            raise HTTPException(status_code=400, message="invalid amount")
+            raise HttpException(status_code=400, message="invalid amount")
 
         return self
 
