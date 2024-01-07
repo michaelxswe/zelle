@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from database.model import AccountModel
+from database.postgres.model import AccountModel
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt

@@ -1,8 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from exception_handler import HttpException
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict
 
 
 class Transaction(BaseModel):
@@ -13,13 +12,6 @@ class TransactionCreate(Transaction):
     recipient_account_id: int
     amount: Decimal
     message: str | None = None
-
-    @model_validator(mode="after")
-    def populate_fields(self):
-        if self.amount <= 0:
-            raise HttpException(status_code=400, message="invalid amount")
-
-        return self
 
 
 class FinancialTransaction(Transaction):

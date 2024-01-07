@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from database.client import get_database_session
-from database.model import AccountModel, TransactionModel
+from database.postgres.client import get_database_session
+from database.postgres.model import AccountModel, TransactionModel
 from fastapi import Depends
 from schema.transaction import TransactionHistory
 from sqlalchemy import text

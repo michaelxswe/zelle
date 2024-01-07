@@ -10,10 +10,10 @@ from schema.transaction import (
 )
 from service.transaction import TransactionService
 
-router = APIRouter(prefix="/api/transaction", tags=["Transaction"])
+router = APIRouter(prefix="/v1", tags=["Transaction"])
 
 
-@router.post("/deposit", response_model=FinancialTransaction, status_code=201)
+@router.post("/transaction/deposit", response_model=FinancialTransaction, status_code=201)
 async def deposit(
     amount: Decimal,
     access_token: str = Depends(get_access_token),
@@ -22,7 +22,7 @@ async def deposit(
     return await transaction_service.deposit(amount, access_token)
 
 
-@router.post("/withdraw", response_model=FinancialTransaction, status_code=201)
+@router.post("/transaction/withdraw", response_model=FinancialTransaction, status_code=201)
 async def withdraw(
     amount: Decimal,
     access_token: str = Depends(get_access_token),
@@ -31,7 +31,7 @@ async def withdraw(
     return await transaction_service.withdraw(amount, access_token)
 
 
-@router.post("/transfer", response_model=FundTransfer, status_code=201)
+@router.post("/transaction/transfer", response_model=FundTransfer, status_code=201)
 async def transfer(
     transaction_data: TransactionCreate,
     access_token: str = Depends(get_access_token),
@@ -40,7 +40,7 @@ async def transfer(
     return await transaction_service.transfer(transaction_data, access_token)
 
 
-@router.get("/history", response_model=list[TransactionHistory], status_code=201)
+@router.get("/transaction/history", response_model=list[TransactionHistory], status_code=201)
 async def history(
     access_token: str = Depends(get_access_token),
     transaction_service: TransactionService = Depends(),

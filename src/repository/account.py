@@ -1,5 +1,5 @@
-from database.client import get_database_session
-from database.model import AccountModel
+from database.postgres.client import get_database_session
+from database.postgres.model import AccountModel
 from fastapi import Depends
 from schema.account import AccountCreate, AccountUpdate
 from sqlalchemy import select

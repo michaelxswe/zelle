@@ -21,11 +21,11 @@ class TransactionService:
 
     def sufficient_balance_check(self, current_balance, demanded_fund):
         if current_balance < demanded_fund:
-            raise HttpException(status_code=400, message="insufficient balance")
+            raise HttpException(status_code=400, content={"message": "insufficient balance"})
 
     def valid_amount_check(self, amount):
         if amount <= 0:
-            raise HttpException(status_code=400, message="invalid amount")
+            raise HttpException(status_code=400, content={"message": "invalid amount"})
 
     async def deposit(self, amount: Decimal, access_token: str):
         self.valid_amount_check(amount)
@@ -38,20 +38,20 @@ class TransactionService:
         account = await self.account_service.get_account_by_access_token(access_token)
 
         if account.balance < amount:
-            raise HttpException(status_code=400, message="insufficient balance")
+            raise HttpException(status_code=400, content={"message": "insufficient balance"})
 
         return await self.transaction_repository.withdraw(account, amount)
 
     async def transfer(self, transaction_data: TransactionCreate, access_token: str):
         if transaction_data.amount <= 0:
-            raise HttpException(status_code=400, message="invalid amount")
+            raise HttpException(status_code=400, content={"message": "invalid amount"})
 
         account = await self.account_service.get_account_by_access_token(access_token)
         self.sufficient_balance_check(account.balance, transaction_data.amount)
         recipient_account = await self.account_service.get_account_by_id(transaction_data.recipient_account_id)
 
         if account.id == recipient_account.id:
-            raise HttpException(status_code=400, message="cant transfer money to yourself")
+            raise HttpException(status_code=400, content={"message": "invalid recipient"})
 
         return await self.transaction_repository.transfer(
             account, recipient_account, transaction_data.amount, transaction_data.message

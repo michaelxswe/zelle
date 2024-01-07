@@ -1,10 +1,11 @@
-import uuid
-
+import time
 from fastapi import Request
 
 
-async def request_trace(request: Request, call_next):
-    correlation_id = str(uuid.uuid4())
-    request.state.correlation_id = correlation_id
-    response = await call_next(request)
-    return response
+class Middleware:
+    async def process_time(self, request: Request, call_next):
+        start = time.time()
+        response = await call_next(request)
+        end = time.time()
+        print(end - start)
+        return response

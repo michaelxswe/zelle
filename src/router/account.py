@@ -4,10 +4,10 @@ from schema.account import AccountCreate, AccountCredentials, AccountRead, Accou
 from schema.token import AccessToken
 from service.account import AccountService
 
-router = APIRouter(prefix="/api/account", tags=["Account"])
+router = APIRouter(prefix="/v1", tags=["Account"])
 
 
-@router.post("", response_model=AccountRead, status_code=201)
+@router.post("/account", response_model=AccountRead, status_code=201)
 async def create_account(
     account_data: AccountCreate,
     account_service: AccountService = Depends(),
@@ -15,7 +15,7 @@ async def create_account(
     return await account_service.create_account(account_data)
 
 
-@router.get("", response_model=AccountRead, status_code=200)
+@router.get("/account", response_model=AccountRead, status_code=200)
 async def get_account(
     access_token: str = Depends(get_access_token),
     account_service: AccountService = Depends(),
@@ -23,7 +23,7 @@ async def get_account(
     return await account_service.get_account_by_access_token(access_token)
 
 
-@router.patch("", response_model=AccountRead, status_code=200)
+@router.patch("/account", response_model=AccountRead, status_code=200)
 async def update_account(
     account_data: AccountUpdate,
     access_token: str = Depends(get_access_token),
@@ -32,7 +32,7 @@ async def update_account(
     return await account_service.update_account(account_data, access_token)
 
 
-@router.delete("", response_model=None, status_code=200)
+@router.delete("/account", response_model=None, status_code=200)
 async def delete_account(
     access_token: str = Depends(get_access_token),
     account_service: AccountService = Depends(),
@@ -40,7 +40,7 @@ async def delete_account(
     return await account_service.delete_account(access_token)
 
 
-@router.post("/sign-in", response_model=AccessToken, status_code=200)
+@router.post("/account/sign-in", response_model=AccessToken, status_code=200)
 async def sign_in(
     account_credentials: AccountCredentials,
     account_service: AccountService = Depends(),
