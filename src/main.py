@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from config import Settings
 from database.client import DatabaseClient
-from exception import (
+from exception_handler import (
     HttpException,
     http_exception_handler,
     jwt_exception_handler,
@@ -32,11 +32,11 @@ def create_app(settings: Settings = Settings()):  # type: ignore
     app.state.settings = settings
     app.state.database_client = DatabaseClient(app.state.settings.DATABASE_URL)
 
-    app.add_exception_handler(HttpException, http_exception_handler)
-    app.add_exception_handler(RequestValidationError, validation_exception_handler)
-    app.add_exception_handler(Exception, unhandled_exception_handler)
-    app.add_exception_handler(JWTError, jwt_exception_handler)
-    app.add_exception_handler(SQLAlchemyError, sqlalchemy_exception_handler)
+    app.exception_handler(HttpException)(http_exception_handler)
+    app.exception_handler(RequestValidationError)(validation_exception_handler)
+    app.exception_handler(Exception)(unhandled_exception_handler)
+    app.exception_handler(JWTError)(jwt_exception_handler)
+    app.exception_handler(SQLAlchemyError)(sqlalchemy_exception_handler)
 
     app.middleware("http")(request_trace)
 

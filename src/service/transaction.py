@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from config import Settings, get_settings
-from exception import HttpException
+from exception_handler import HttpException
 from fastapi import Depends
 from repository.transaction import TransactionRepository
 from schema.transaction import TransactionCreate

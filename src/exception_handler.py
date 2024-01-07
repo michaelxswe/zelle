@@ -8,9 +8,10 @@ from sqlalchemy.exc import SQLAlchemyError
 
 
 class HttpException(Exception):
-    def __init__(self, status_code: int, message: str):
+    def __init__(self, status_code: int, message: str | None = None, headers: dict[str, str] | None = None):
         self.status_code = status_code
         self.message = message
+        self.headers = headers
 
 
 def handle_exception(error: str):
@@ -21,7 +22,7 @@ def handle_exception(error: str):
 
 
 async def http_exception_handler(request: Request, e: HttpException):
-    return JSONResponse(status_code=e.status_code, content={"message": e.message})
+    return JSONResponse(status_code=e.status_code, content={"message": e.message}, headers=e.headers)
 
 
 async def validation_exception_handler(request: Request, e: RequestValidationError):

@@ -1,6 +1,6 @@
 from auth.guard import create_access_token, validate_access_token
 from config import Settings, get_settings
-from exception import HttpException
+from exception_handler import HttpException
 from fastapi import Depends
 from repository.account import AccountRepository
 from schema.account import AccountCreate, AccountUpdate

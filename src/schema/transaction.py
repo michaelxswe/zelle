@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from exception import HttpException
+from exception_handler import HttpException
 from pydantic import BaseModel, ConfigDict, model_validator
 
 
