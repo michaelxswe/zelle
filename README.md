@@ -4,7 +4,7 @@ Service-Repository pattern boilerplate
 
 A RESTful API for a Zelle clone
 
-<http://18.227.107.100/docs>
+<http://18.219.77.115/docs>
 
 ## Techstack:
 
