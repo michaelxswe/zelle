@@ -1,8 +1,6 @@
-# Zelle Clone Backend
+# Zelle Backend
 
-Service-Repository pattern boilerplate
-
-A RESTful API for a Zelle clone
+A RESTful API for a managing monetary transactions
 
 <http://18.219.77.115/docs>
 
