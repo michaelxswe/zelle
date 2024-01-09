@@ -1,12 +1,12 @@
 from contextlib import asynccontextmanager
 
+import exception
+import middleware
 from config import Settings
 from database.postgres.client import DatabaseClient
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from jose import JWTError
-import middleware
-import exception
 from router import account, database, transaction
 from sqlalchemy.exc import SQLAlchemyError
 
