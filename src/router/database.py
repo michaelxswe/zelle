@@ -1,6 +1,6 @@
 from config import Settings, get_settings
 from database.postgres.client import DatabaseClient, get_database_client
-from exception_handler import HttpException
+from exception import HttpException
 from fastapi import APIRouter, Depends
 
 router = APIRouter(prefix="/v1", tags=["Database"])
