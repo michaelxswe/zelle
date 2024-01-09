@@ -14,6 +14,7 @@ def anyio_backend():
 @fixture(scope="session")
 async def app():
     app = create_app()
+    await app.state.database_client.drop_tables()
     await app.state.database_client.create_tables()
     yield app
     await app.state.database_client.drop_tables()
