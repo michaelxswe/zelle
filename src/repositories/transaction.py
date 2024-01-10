@@ -1,9 +1,9 @@
 from decimal import Decimal
 
-from database.postgres.client import get_database_session
-from database.postgres.model import AccountModel, TransactionModel
+from databases.postgres.client import get_database_session
+from databases.postgres.models import AccountModel, TransactionModel
 from fastapi import Depends
-from schema.transaction import TransactionHistory
+from schemas.transaction import TransactionHistory
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -61,7 +61,7 @@ class TransactionRepository:
                     when recipient_account_id = :account_id and mode = 'transfer' then 'receive'
                     else mode
                 end as mode
-            from transaction
+            from transactions
             where account_id = :account_id or recipient_account_id = :account_id
             order by id desc;
             """

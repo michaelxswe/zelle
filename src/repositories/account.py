@@ -1,7 +1,7 @@
-from database.postgres.client import get_database_session
-from database.postgres.model import AccountModel
+from databases.postgres.client import get_database_session
+from databases.postgres.models import AccountModel
 from fastapi import Depends
-from schema.account import AccountCreate, AccountUpdate
+from schemas.account import AccountCreate, AccountUpdate
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 

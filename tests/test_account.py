@@ -5,7 +5,7 @@ import pytest
 @pytest.mark.anyio
 async def test_create_account(client: AsyncClient):
     res = await client.post(
-        "/v1/account",
+        "/v1/accounts",
         json={"username": "michael", "password": "1234", "phone": "123456789"},
     )
 

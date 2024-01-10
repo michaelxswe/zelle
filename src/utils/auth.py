@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 
-from database.postgres.model import AccountModel
+from databases.postgres.models import AccountModel
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
-from schema.token import AccessToken
+from schemas.token import AccessToken
 
 http_bearer = HTTPBearer()
 

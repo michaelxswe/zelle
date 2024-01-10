@@ -1,9 +1,9 @@
-from auth.guard import create_access_token, validate_access_token
 from config import Settings, get_settings
-from exception import HttpException
+from exceptions import HttpException
 from fastapi import Depends
-from repository.account import AccountRepository
-from schema.account import AccountCreate, AccountUpdate
+from repositories.account import AccountRepository
+from schemas.account import AccountCreate, AccountUpdate
+from utils.auth import create_access_token, validate_access_token
 
 
 class AccountService:
@@ -13,7 +13,7 @@ class AccountService:
 
     async def create_account(self, account_data: AccountCreate):
         if await self.account_repository.username_exist(account_data.username):
-            raise HttpException(status_code=409, content={"message":"username already exist"})
+            raise HttpException(status_code=409, content={"message": "username already exist"})
 
         return await self.account_repository.create_account(account_data)
 

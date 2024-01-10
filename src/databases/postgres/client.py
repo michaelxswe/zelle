@@ -1,4 +1,4 @@
-from database.postgres.model import Base
+from databases.postgres.models import Base
 from fastapi import Request
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 

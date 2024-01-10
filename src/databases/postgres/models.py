@@ -11,7 +11,7 @@ class Base(DeclarativeBase, MappedAsDataclass):
 
 
 class AccountModel(Base):
-    __tablename__ = "account"
+    __tablename__ = "accounts"
 
     id: Mapped[int] = mapped_column(INTEGER, primary_key=True, init=False)
     username: Mapped[str] = mapped_column(VARCHAR(length=25), unique=True)
@@ -24,12 +24,12 @@ class AccountModel(Base):
 
 
 class TransactionModel(Base):
-    __tablename__ = "transaction"
+    __tablename__ = "transactions"
 
     id: Mapped[int] = mapped_column(INTEGER, primary_key=True, init=False)
-    account_id: Mapped[int] = mapped_column(ForeignKey("account.id", ondelete="cascade"))
+    account_id: Mapped[int] = mapped_column(ForeignKey("accounts.id", ondelete="cascade"))
     recipient_account_id: Mapped[int | None] = mapped_column(
-        ForeignKey("account.id", ondelete="cascade"), nullable=True
+        ForeignKey("accounts.id", ondelete="cascade"), nullable=True
     )
     mode: Mapped[str] = mapped_column(
         VARCHAR(length=25), CheckConstraint("mode in ('deposit', 'withdraw', 'transfer')")

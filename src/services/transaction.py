@@ -1,11 +1,11 @@
 from decimal import Decimal
 
 from config import Settings, get_settings
-from exception import HttpException
+from exceptions import HttpException
 from fastapi import Depends
-from repository.transaction import TransactionRepository
-from schema.transaction import TransactionCreate
-from service.account import AccountService
+from repositories.transaction import TransactionRepository
+from schemas.transaction import TransactionCreate
+from services.account import AccountService
 
 
 class TransactionService:
