@@ -2,7 +2,7 @@
 
 A RESTful API for a managing monetary transactions
 
-<http://18.219.77.115/docs>
+<http://3.147.127.202/docs>
 
 ## Techstack:
 
